@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Bero</title>
+  <link rel="manifest" href="manifest.json">
+  <style>
+    :root { --primary: #6366f1; --bg: #0a0a0a; --card: #1a1a1a; --text: #e0e0e0; }
+    body { background: var(--bg); color: var(--text); padding-bottom: 80px; font-family: sans-serif; }
+    .header { background: #111; padding: 15px; text-align: center; font-size: 24px; font-weight: bold; }
+    .container { padding: 15px; }
+    .card { background: var(--card); padding: 15px; border-radius: 15px; margin-bottom: 10px; }
+    .btn { background: var(--primary); color: white; padding: 12px; border: none; border-radius: 10px; width: 100%; margin-top: 10px; }
+    input, textarea { width: 100%; padding: 10px; margin: 5px 0; background: #222; border: 1px solid #333; border-radius: 10px; color: white; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    .nav { position: fixed; bottom: 0; width: 100%; background: #111; display: flex; justify-content: space-around; padding: 10px; }
+    .nav button { background: none; border: none; color: #888; }
+    .nav button.active { color: var(--primary); }
+  </style>
+</head>
+<body>
+<div class="header">Bero</div>
+<div class="container">
+  <div id="tasks" class="tab-content active">
+    <h3>إدارة المهام</h3>
+    <input type="text" id="client-name" placeholder="اسم العميل">
+    <button class="btn" onclick="addClient()">حفظ العميل</button>
+    <div id="client-list" style="margin-top:20px;"></div>
+  </div>
+  <div id="ai" class="tab-content">
+    <h3>Alex AI</h3>
+    <div id="chat-box" style="height:300px; overflow-y:auto; background:#111; padding:10px; border-radius:10px;">
+      <div style="background:#222; padding:10px; border-radius:10px;">أهلاً براء، أنا Alex.. كيف أساعدك؟</div>
+    </div>
+    <input type="text" id="ai-input" placeholder="اكتب لـ Alex...">
+    <button class="btn" onclick="chatWithAlex()">إرسال</button>
+  </div>
+</div>
+<div class="nav">
+  <button class="active" onclick="showTab('tasks')">🏠 المهام</button>
+  <button onclick="showTab('ai')">🤖 Alex</button>
+</div>
+<script>
+  function showTab(id) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+  function addClient() {
+    const name = document.getElementById('client-name').value;
+    document.getElementById('client-list').innerHTML += `<div class="card">${name}</div>`;
+  }
+  function chatWithAlex() {
+    const input = document.getElementById('ai-input');
+    document.getElementById('chat-box').innerHTML += `<div style="color:#6366f1;">${input.value}</div><div style="background:#222; padding:5px; margin:5px;">أنا Alex، فهمت طلبك يا براء!</div>`;
+    input.value = '';
+  }
+</script>
+</body>
+</html>
